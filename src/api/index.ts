@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import v1Routers from './v1';
-import healthRouter from './health';
+import adminRouters from './admin';
 
 const router = Router();
 
 router.use('/v1', v1Routers);
-router.use('/health', healthRouter);
+router.use('/admin', adminRouters);
 
 export default router;

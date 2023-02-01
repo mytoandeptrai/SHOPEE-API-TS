@@ -13,9 +13,27 @@ import logger, { errorLogging, requestLogging } from './logger';
 import config from 'config';
 import { errorMiddleware } from 'middlewares';
 
+import bodyParser from 'body-parser';
+import expressFileupload from 'express-fileupload';
+
 const app = express();
 
-app.use(cors());
+const corsOption = {
+  credentials: true,
+  origin: ['http://localhost:3000'],
+};
+
+app.use(cors(corsOption));
+app.use(bodyParser.json({ limit: '100mb' }));
+app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
+app.use(expressFileupload({ useTempFiles: false }));
+app.use(
+  express.urlencoded({
+    extended: true,
+    limit: '100mb',
+  })
+);
+app.set('trust proxy', true);
 
 function initializeSecurity() {
   app.use(noCache());

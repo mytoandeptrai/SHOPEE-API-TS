@@ -6,12 +6,9 @@ import URLParams from './urlparams';
  */
 export default interface RequestWithUser extends Request {
   // To use userId and role, please inject the same in a middleware, by decoding an access token.
-  userId: string; // Zalo Id
-  customerId: number;
-  customerToken: string;
-  role: string;
+  user: any;
   startTime?: number;
   userAgent?: { [key: string]: any };
   searchParams?: URLParams; // TODO: perhaps change to Dto and add validation,
-  appName: string;
+  file?: any;
 }

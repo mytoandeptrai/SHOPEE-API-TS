@@ -1,18 +1,21 @@
 import { NextFunction, Response } from 'express';
 import RequestWithUser from 'utils/rest/request';
-import fmt from 'utils/formatter';
+import { ApiResponse } from 'utils/rest/response';
 import * as service from './service';
 
-const getUsers = async (request: RequestWithUser, response: Response, next: NextFunction) => {
-  const users = await service.getUsers(request.query);
-  response.status(200);
-  response.send(fmt.formatResponse(users, Date.now() - request.startTime, 'OK', 1));
-};
-
 const createUser = async (request: RequestWithUser, response: Response, next: NextFunction) => {
-  const users = await service.createUser(request.body);
-  response.status(200);
-  response.send(fmt.formatResponse(users, Date.now() - request.startTime, 'OK', 1));
+  const result = await service.createUser(request.body);
+  if (result) new ApiResponse(result, 'OK', 200, Date.now() - request.startTime).send(response);
 };
 
-export { getUsers, createUser };
+const updateUser = async (request: RequestWithUser, response: Response, next: NextFunction): Promise<any> => {
+  const result = await service.updateUser(request, next);
+  if (result) new ApiResponse(result, 'OK', 200, Date.now() - request.startTime).send(response);
+};
+
+const updateAvatar = async (request: RequestWithUser, response: Response, next: NextFunction): Promise<any> => {
+  const result = await service.updateAvatar(request, next);
+  if (result) new ApiResponse(result, 'OK', 200, Date.now() - request.startTime).send(response);
+};
+
+export { createUser, updateUser, updateAvatar };

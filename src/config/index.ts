@@ -25,10 +25,22 @@ export default {
   mongodb: {
     protocol: process.env.MONGODB_PROTOCOL,
     username: process.env.MONGODB_USERNAME,
-    pasword: process.env.MONGODB_PASSWORD,
+    password: process.env.MONGODB_PASSWORD,
     host: process.env.MONGODB_HOST,
     replicaSet: process.env.MONGODB_REPLICA_SET,
     dbName: process.env.MONGODB_NAME,
   },
+  jwt: {
+    jwtAccessTokenSecret: process.env.ACCESS_TOKEN_SECRET,
+    expiredAccessToken: process.env.EXPIRED_ACCESS_TOKEN,
+    jwtRefreshTokenSecret: process.env.REFRESH_TOKEN_SECRET,
+    expiredRefreshToken: process.env.EXPIRED_REFRESH_TOKEN,
+  },
+  cloudinary: {
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET,
+  },
   redisHost: process.env.REDIS_HOST,
+  cacheExpire: process.env.CACHE_EXPIRE,
 };

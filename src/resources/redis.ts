@@ -19,11 +19,23 @@ const connection = (): Redis => {
   return redisInstance;
 };
 
+/** Notes with redis instance
+ * @param EX seconds -- Set the specified expire time, in seconds.
+ * @param PX milliseconds -- Set the specified expire time, in milliseconds.
+ * @param NX -- Only set the key if it does not already exist.
+ * @param XX -- Only set the key if it already exist.
+ */
+
 const redis = connection();
 
-const set = async (key: string, value: any, ttl: number | string) => {
-  logger.info(`set cache with key: ${key}`);
-  return redis.set(key, value, 'EX', ttl);
+const setEX = async (key: string, seconds: number, data: string) => {
+  logger.info(`set cache with key: ${key} and data: ${data} in seconds: ${seconds} seconds`);
+  return redis.setex(key, seconds, data);
+};
+
+const setNX = async (key: string, data: string | number) => {
+  logger.info(`set cache with key: ${key} and data: ${data}`);
+  return redis.setnx(key, data);
 };
 
 const get = async (key: string) => {
@@ -40,4 +52,4 @@ const clear = async (key: string) => {
   return data;
 };
 
-export { set, get, clear };
+export { setEX, setNX, get, clear };

@@ -1,26 +1,21 @@
-import { ValidationError } from 'class-validator';
-import { APP_CONSTANTS } from 'utils/constants';
-
 class HttpException extends Error {
+  public name: string;
+
   public status: number;
 
   public message: string;
 
-  public errorCode: string;
+  public errorCode?: string;
 
-  public service: string;
+  public time?: number;
 
-  public validationErrors: ValidationError[];
-
-  public response: any;
-
-  constructor(status: number, message: string, errorCode: string, validationErrors?: ValidationError[]) {
+  constructor(name: string, status: number, message: string, errorCode?: string, time?: number) {
     super(message);
+    this.name = name;
     this.status = status;
     this.message = message;
     this.errorCode = errorCode;
-    this.service = APP_CONSTANTS.service;
-    this.validationErrors = validationErrors;
+    this.time = time;
   }
 }
 

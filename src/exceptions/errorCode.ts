@@ -20,6 +20,18 @@ export const ErrorCodes: { [key: string]: CustomError } = {
     CODE: 'USER_WITH_ID_NOT_FOUND',
     MESSAGE: 'User with given id not found',
   },
+  USER_WITH_EMAIL_NOT_FOUND: {
+    CODE: 'USER_WITH_EMAIL_NOT_FOUND',
+    MESSAGE: 'User with given email not found',
+  },
+  USER_WITH_PASSWORD_INCORRECT: {
+    CODE: 'USER_WITH_PASSWORD_INCORRECT',
+    MESSAGE: 'User with given password is incorrect',
+  },
+  USER_IS_ALREADY_IN_DB: {
+    CODE: 'USER_IS_ALREADY_IN_DB',
+    MESSAGE: 'User is already in the database',
+  },
   SERVICE_ERROR: {
     CODE: 'SERVICE_ERROR',
     MESSAGE: 'Obtained error from external service. Please check the logs.',

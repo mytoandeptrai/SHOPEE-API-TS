@@ -6,11 +6,10 @@ import logger from 'logger';
 const mongoDBConfig = config.mongodb;
 
 const mongodbProtocol = mongoDBConfig.protocol || 'mongodb';
-const userNamePwd = mongoDBConfig.username ? `${mongoDBConfig.username}:${mongoDBConfig.pasword}@` : '';
 
-let mongodbUrl = `${mongodbProtocol}://${userNamePwd}${mongoDBConfig.host}/${mongoDBConfig.dbName}?${
-  userNamePwd ? 'authSource=admin' : ''
-}retryWrites=true`;
+const userNamePwd = mongoDBConfig.username ? `${mongoDBConfig.username}:${mongoDBConfig.password}@` : '';
+
+let mongodbUrl = `${mongodbProtocol}+srv://${userNamePwd}${mongoDBConfig.host}/${mongoDBConfig.dbName}?retryWrites=true&w=majority`;
 
 if (mongoDBConfig.replicaSet) {
   mongodbUrl += `&replicaSet=${mongoDBConfig.replicaSet}`;

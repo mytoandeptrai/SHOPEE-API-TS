@@ -1,10 +1,10 @@
 import { plainToClass } from 'class-transformer';
 import { validate, ValidationError } from 'class-validator';
-import { Request } from 'express';
-import * as express from 'express';
 import { HttpException } from 'exceptions';
+import StatusCode from 'exceptions/statusCode';
+import * as express from 'express';
+import { Request } from 'express';
 import { APP_CONSTANTS } from 'utils/constants';
-import { ErrorCodes } from 'exceptions/errorCode';
 
 /**
  * Method to get request validator type based on the parameter.
@@ -40,8 +40,14 @@ function validationMiddleware(type: any, parameter: string, skipMissingPropertie
     validate(requestBody, { skipMissingProperties, forbidUnknownValues: true, whitelist: true }).then(
       (errors: ValidationError[]) => {
         if (errors.length > 0) {
-          const errorDetail = ErrorCodes.VALIDATION_ERROR;
-          next(new HttpException(400, errorDetail.MESSAGE, errorDetail.CODE, errors));
+          next(
+            new HttpException(
+              'ValidateError',
+              StatusCode.BadRequest.status,
+              'Validation failed error',
+              StatusCode.BadRequest.name
+            )
+          );
         } else {
           // whitelist only in body of the request
           if (APP_CONSTANTS.body === parameter) {

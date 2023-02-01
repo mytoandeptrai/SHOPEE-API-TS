@@ -8,8 +8,11 @@ const APP_CONSTANTS = {
 };
 
 const DEFAULT_PAGING = {
-  limit: 100,
-  skip: 0,
+  CURRENT_PAGE: 1,
+  LIMIT_PER_PAGE: 30,
 };
 
-export { APP_CONSTANTS, DEFAULT_PAGING };
+const SORT_BY = ['createdAt', 'view', 'sold', 'price'];
+const ORDER = ['desc', 'asc'];
+
+export { APP_CONSTANTS, DEFAULT_PAGING, SORT_BY, ORDER };
