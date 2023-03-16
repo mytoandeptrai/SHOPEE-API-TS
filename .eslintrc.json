@@ -1,14 +1,8 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint",
-    "prettier"
-  ],
-  "extends": [
-    "airbnb-typescript/base",
-    "plugin:prettier/recommended"
-  ],
+  "plugins": ["@typescript-eslint", "prettier"],
+  "extends": ["airbnb-typescript/base", "plugin:prettier/recommended"],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
@@ -19,11 +13,14 @@
     "import/prefer-default-export": "off",
     "comma-dangle": 0,
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["error", {
-      "vars": "all",
-      "args": "none",
-      "ignoreRestSiblings": false
-    }],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "args": "none",
+        "ignoreRestSiblings": false
+      }
+    ],
     "@typescript-eslint/naming-convention": [
       "error",
       {
@@ -32,13 +29,21 @@
         "leadingUnderscore": "allow"
       }
     ],
-    "max-len": ["error", { 
-      "ignoreComments": true,
-      "code": 120,
-      "tabWidth": 2,
-      "ignoreStrings": true
+    "max-len": [
+      "error",
+      {
+        "ignoreComments": true,
+        "code": 120,
+        "tabWidth": 2,
+        "ignoreStrings": true
       }
     ],
-    "operator-linebreak": "off"
+    "operator-linebreak": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
   }
 }

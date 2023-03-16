@@ -6,4 +6,5 @@ export enum MODELS {
   product = 'product',
   voucher = 'voucher',
   redis = 'redis',
+  shop = 'shop',
 }
