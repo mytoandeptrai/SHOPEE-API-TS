@@ -8,4 +8,6 @@ export enum MODELS {
   redis = 'redis',
   shop = 'shop',
   cart = 'cart',
+  order = 'order',
+  review = 'review',
 }

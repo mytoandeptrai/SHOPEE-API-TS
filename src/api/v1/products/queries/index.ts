@@ -89,4 +89,14 @@ const getSingleProduct = async (request: RequestWithUser, next: NextFunction) =>
   }
 };
 
-export { getAllProducts, getSingleProduct };
+const getProductsOfShop = async (request: RequestWithUser, next: NextFunction) => {
+  try {
+    const shopId = request.params?.shopId;
+    const products = await ProductModel.find({ shop: shopId });
+    return products;
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { getAllProducts, getSingleProduct, getProductsOfShop };

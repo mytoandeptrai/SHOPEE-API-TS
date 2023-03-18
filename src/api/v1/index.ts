@@ -1,11 +1,12 @@
 import { Router } from 'express';
-import userRouter from './users';
 import authRouter from './auth';
-import productRouter from './products';
 import bannerRouter from './banners';
-import categoriesRouter from './categories';
-import shopRouter from './shop';
 import cartRouter from './cart';
+import categoriesRouter from './categories';
+import productRouter from './products';
+import reviewRouter from './review';
+import shopRouter from './shop';
+import userRouter from './users';
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use('/banners', bannerRouter);
 router.use('/categories', categoriesRouter);
 router.use('/shops', shopRouter);
 router.use('/carts', cartRouter);
+router.use('/reviews', reviewRouter);
 
 export default router;

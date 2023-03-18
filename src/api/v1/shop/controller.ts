@@ -3,6 +3,7 @@ import RequestWithUser from 'utils/rest/request';
 import { ApiResponse, Meta } from 'utils/rest/response';
 import * as service from './service';
 import * as queries from './queries';
+import * as queriesProduct from '../products/queries';
 
 const getAllShops = async (request: RequestWithUser, response: Response, next: NextFunction) => {
   const result = await queries.getAllShops(request, next);
@@ -13,6 +14,12 @@ const getAllShops = async (request: RequestWithUser, response: Response, next: N
 
 const getSingleShop = async (request: RequestWithUser, response: Response, next: NextFunction) => {
   const result = await queries.getSingleShop(request, next);
+
+  if (result) new ApiResponse(result, 'OK', 200, Date.now() - request.startTime).send(response);
+};
+
+const getProductsOfShop = async (request: RequestWithUser, response: Response, next: NextFunction) => {
+  const result = await queriesProduct.getProductsOfShop(request, next);
 
   if (result) new ApiResponse(result, 'OK', 200, Date.now() - request.startTime).send(response);
 };
@@ -32,4 +39,4 @@ const updateCurrentShop = async (request: RequestWithUser, response: Response, n
   if (result) new ApiResponse(result, 'OK', 200, Date.now() - request.startTime).send(response);
 };
 
-export { createNewShop, deleteShop, updateCurrentShop, getAllShops, getSingleShop };
+export { createNewShop, deleteShop, updateCurrentShop, getAllShops, getSingleShop, getProductsOfShop };

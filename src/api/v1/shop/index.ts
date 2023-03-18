@@ -6,6 +6,7 @@ const router = Router();
 
 router.get('/', controller.getAllShops);
 router.post('/create', authMiddleware.protectRouteMiddleware, controller.createNewShop);
+router.route('/:shopId/products').get(controller.getProductsOfShop);
 router
   .route('/:id')
   .put(authMiddleware.protectRouteMiddleware, controller.updateCurrentShop)
