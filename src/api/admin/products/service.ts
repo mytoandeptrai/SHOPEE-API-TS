@@ -2,6 +2,7 @@ import { HttpException } from 'exceptions';
 import StatusCode from 'exceptions/statusCode';
 import { NextFunction } from 'express';
 import { ProductModel } from 'models';
+import ShopModel from 'models/schemas/Shop';
 import RequestWithUser from 'utils/rest/request';
 import { CloudinaryUpload } from 'utils/uploads';
 
@@ -11,6 +12,18 @@ const createNewProduct = async (request: RequestWithUser, next: NextFunction) =>
   try {
     const images = request.files?.images;
     const image = request.files?.image;
+    const shopId = request.params?.shopId;
+
+    const currentShop = await ShopModel.findById(shopId);
+
+    if (!currentShop) {
+      throw new HttpException(
+        'NotFoundError',
+        StatusCode.BadRequest.status,
+        'The shop does not exist',
+        StatusCode.BadRequest.name
+      );
+    }
 
     if (Array.isArray(image)) {
       throw new HttpException(

@@ -15,6 +15,7 @@ const ProductSchema = new Schema<Product>(
     stock: { type: Number, default: 0 },
     sold: { type: Number, default: 0 },
     view: { type: Number, default: 0 },
+    shop: { type: Schema.Types.ObjectId, ref: MODELS.shop, require: true },
   },
   {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },

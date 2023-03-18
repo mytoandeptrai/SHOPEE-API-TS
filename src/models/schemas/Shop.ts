@@ -12,7 +12,7 @@ const ShopSchema = new Schema<Shop>(
     ward: { id: { type: String, default: '' }, name: { type: String, default: '' } },
     street: { type: String, default: '' },
     address: { type: String, default: '' },
-    user: { type: Schema.Types.ObjectId, ref: MODELS.category, require: true },
+    user: { type: Schema.Types.ObjectId, ref: MODELS.user, require: true },
     slug: { type: String, default: '' },
   },
   {
