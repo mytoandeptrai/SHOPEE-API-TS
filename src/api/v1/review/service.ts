@@ -3,7 +3,29 @@ import StatusCode from 'exceptions/statusCode';
 import { NextFunction } from 'express';
 import { ProductModel } from 'models';
 import ReviewModel from 'models/schemas/Review';
+import { convertStringToObjectId } from 'utils/common';
 import RequestWithUser from 'utils/rest/request';
+
+const calculateRatingOfProduct = async (productId: string, next: NextFunction): Promise<number> => {
+  try {
+    const productIdConverted = convertStringToObjectId(productId);
+    const averageRating = await ReviewModel.aggregate([
+      {
+        $match: { productId: productIdConverted },
+      },
+      {
+        $group: {
+          _id: '$productId',
+          averageRating: { $avg: '$rating' },
+        },
+      },
+    ]);
+
+    return Math.ceil(averageRating[0].averageRating);
+  } catch (error) {
+    next(error);
+  }
+};
 
 const createNewReview = async (request: RequestWithUser, next: NextFunction) => {
   try {
@@ -25,19 +47,12 @@ const createNewReview = async (request: RequestWithUser, next: NextFunction) => 
       rating: Number(rating),
       user: _id,
     };
-
     const savedReview = await ReviewModel.create(reviewBody);
-
-    const obj = await ReviewModel.aggregate([
-      {
-        $match: { productId: productId },
-      },
-    ]);
-    console.log('🚀 ~ file: service.ts:36 ~ createNewReview ~ obj:', obj);
-
-    // const reviewsDB = await ReviewModel.find({ productId }).lean();
-    // existedProduct.rating = reviewsDB.reduce((acc, item: any) => item.rating + acc, 0) / reviewsDB.length;
-    // await existedProduct.save();
+    if (savedReview) {
+      const averageRatingValue = await calculateRatingOfProduct(productId, next);
+      existedProduct.rating = averageRatingValue;
+      await existedProduct.save();
+    }
 
     return savedReview;
   } catch (error) {
@@ -85,11 +100,9 @@ const updateReview = async (request: RequestWithUser, next: NextFunction) => {
       comment,
     };
     const updatedReview = await existedReview.updateOne({ $set: updateReviewBody }, { new: true });
-    const reviewsDB = await ReviewModel.find({ productId }).lean();
-    if (reviewsDB.length > 0) {
-      const totalReviews = reviewsDB.length;
-      const newRating = reviewsDB.reduce((acc, item: any) => item.rating + acc, 0) / totalReviews;
-      existedProduct.rating = newRating;
+    if (updatedReview) {
+      const averageRatingValue = await calculateRatingOfProduct(productId, next);
+      existedProduct.rating = averageRatingValue;
       await existedProduct.save();
     }
 
@@ -125,14 +138,9 @@ const deleteReview = async (request: RequestWithUser, next: NextFunction) => {
 
     const existedProduct = await ProductModel.findById(existedReview.productId);
     await existedReview.remove();
-
-    const reviewsDB = await ReviewModel.find({ productId: existedReview.productId });
-    if (reviewsDB.length > 0) {
-      const totalReviews = reviewsDB.length;
-      const newRating = reviewsDB.reduce((acc, item: any) => item.rating + acc, 0) / totalReviews;
-      existedProduct.rating = newRating;
-      await existedProduct.save();
-    }
+    const averageRatingValue = await calculateRatingOfProduct(existedReview.productId.toString(), next);
+    existedProduct.rating = averageRatingValue;
+    await existedProduct.save();
 
     return existedReview;
   } catch (error) {
