@@ -22,5 +22,9 @@ const ProductSchema = new Schema<Product>(
   }
 );
 
+ProductSchema.pre('remove', async function (next: (err?: Error | undefined) => void) {
+  next();
+});
+
 const ProductModel: Model<Product> = model<Product>(MODELS.product, ProductSchema, MODELS.product);
 export default ProductModel;

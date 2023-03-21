@@ -2,7 +2,7 @@ import { HttpException } from 'exceptions';
 import StatusCode from 'exceptions/statusCode';
 import { NextFunction } from 'express';
 import { APIFeatures } from 'libs/APIFeatures';
-import ShopModel from 'models/schemas/Shop';
+import { ShopModel } from 'models';
 import { DEFAULT_PAGING } from 'utils/constants';
 import RequestWithUser from 'utils/rest/request';
 

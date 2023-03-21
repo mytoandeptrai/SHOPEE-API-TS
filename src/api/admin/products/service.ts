@@ -1,8 +1,7 @@
 import { HttpException } from 'exceptions';
 import StatusCode from 'exceptions/statusCode';
 import { NextFunction } from 'express';
-import { ProductModel } from 'models';
-import ShopModel from 'models/schemas/Shop';
+import { ProductModel, ShopModel } from 'models';
 import RequestWithUser from 'utils/rest/request';
 import { CloudinaryUpload } from 'utils/uploads';
 

@@ -1,7 +1,7 @@
 import { HttpException } from 'exceptions';
 import StatusCode from 'exceptions/statusCode';
 import { NextFunction } from 'express';
-import ReviewModel from 'models/schemas/Review';
+import { ReviewModel } from 'models';
 import RequestWithUser from 'utils/rest/request';
 
 const getAllReviewOfProduct = async (request: RequestWithUser, next: NextFunction) => {

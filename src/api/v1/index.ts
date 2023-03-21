@@ -3,6 +3,7 @@ import authRouter from './auth';
 import bannerRouter from './banners';
 import cartRouter from './cart';
 import categoriesRouter from './categories';
+import orderRouter from './order';
 import productRouter from './products';
 import reviewRouter from './review';
 import shopRouter from './shop';
@@ -18,5 +19,6 @@ router.use('/categories', categoriesRouter);
 router.use('/shops', shopRouter);
 router.use('/carts', cartRouter);
 router.use('/reviews', reviewRouter);
+router.use('/orders', orderRouter);
 
 export default router;

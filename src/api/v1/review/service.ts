@@ -1,8 +1,7 @@
 import { HttpException } from 'exceptions';
 import StatusCode from 'exceptions/statusCode';
 import { NextFunction } from 'express';
-import { ProductModel } from 'models';
-import ReviewModel from 'models/schemas/Review';
+import { ProductModel, ReviewModel } from 'models';
 import { convertStringToObjectId } from 'utils/common';
 import RequestWithUser from 'utils/rest/request';
 
