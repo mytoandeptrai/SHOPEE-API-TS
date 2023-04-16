@@ -5,7 +5,6 @@ import { MODELS } from 'utils/constants/models';
 const OrderSchema = new Schema<Order>(
   {
     user: { type: Schema.Types.ObjectId, ref: MODELS.user, require: true },
-    shop: { type: Schema.Types.ObjectId, ref: MODELS.shop, require: true },
     orderItems: [
       {
         quantity: { type: Number, required: true },

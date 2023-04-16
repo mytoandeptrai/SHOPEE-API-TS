@@ -99,6 +99,10 @@ const StatusCode = {
     status: 511,
     name: 'NetworkAuthenticationRequired',
   },
+  UnProcessable: {
+    status: 422,
+    name: 'UnProcessable',
+  },
 };
 
 export default StatusCode;

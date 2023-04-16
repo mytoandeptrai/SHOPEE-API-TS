@@ -8,6 +8,7 @@ import productRouter from './products';
 import reviewRouter from './review';
 import shopRouter from './shop';
 import userRouter from './users';
+import voucherRouter from './vouchers';
 
 const router = Router();
 
@@ -20,5 +21,6 @@ router.use('/shops', shopRouter);
 router.use('/carts', cartRouter);
 router.use('/reviews', reviewRouter);
 router.use('/orders', orderRouter);
+router.use('/vouchers', voucherRouter);
 
 export default router;

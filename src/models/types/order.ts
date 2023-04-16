@@ -1,6 +1,5 @@
 import { Document } from 'mongoose';
 import Product from './product';
-import Shop from './shop';
 import User from './user';
 
 interface OrderItem {
@@ -26,5 +25,4 @@ export default interface Order extends Document {
   shippingAt: Date;
   deliveredAt: Date;
   canceledAt: Date;
-  shop: Shop;
 }

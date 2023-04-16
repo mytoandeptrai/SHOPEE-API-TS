@@ -37,4 +37,19 @@ const getAllCarts = async (request: RequestWithUser, next: NextFunction) => {
   }
 };
 
-export { getAllCarts };
+const getCartOfUser = async (request: RequestWithUser, next: NextFunction) => {
+  const userId = request.user._id;
+  try {
+    const cartInDb = await CartModel.find({ user: userId.toString() })
+      .populate('product', '_id name image oldPrice price rating stock')
+      .lean();
+    const response = {
+      carts: cartInDb,
+    };
+    return response;
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { getAllCarts, getCartOfUser };

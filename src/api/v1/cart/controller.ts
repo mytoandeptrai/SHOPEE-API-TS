@@ -11,6 +11,11 @@ const getAllCarts = async (request: RequestWithUser, response: Response, next: N
   if (result) new ApiResponse(result.data, 'OK', 200, Date.now() - request.startTime, Object(meta)).send(response);
 };
 
+const getCartOfUser = async (request: RequestWithUser, response: Response, next: NextFunction) => {
+  const result = await queries.getCartOfUser(request, next);
+  if (result) new ApiResponse(result, 'OK', 200, Date.now() - request.startTime).send(response);
+};
+
 const addToCart = async (request: RequestWithUser, response: Response, next: NextFunction) => {
   const result = await service.addToCart(request, next);
   if (result) new ApiResponse(result, 'OK', 200, Date.now() - request.startTime).send(response);
@@ -26,4 +31,4 @@ const deleteAllCarts = async (request: RequestWithUser, response: Response, next
   if (result) new ApiResponse(result, 'OK', 200, Date.now() - request.startTime).send(response);
 };
 
-export { addToCart, deleteSingleCart, deleteAllCarts, getAllCarts };
+export { addToCart, deleteSingleCart, deleteAllCarts, getAllCarts, getCartOfUser };

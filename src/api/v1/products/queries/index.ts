@@ -38,7 +38,11 @@ const getAllProducts = async (request: RequestWithUser, next: NextFunction) => {
     if (name) conditions.name = { $regex: name, $options: 'i' };
 
     const feature = new (APIFeatures as any)(
-      ProductModel.find(conditions).populate({ path: 'category' }).select({ __v: 0, description: 0 }).lean(),
+      ProductModel.find(conditions)
+        .populate({ path: 'category' })
+        .populate({ path: 'shop' })
+        .select({ __v: 0, description: 0 })
+        .lean(),
       request.query
     )
       .paginating()
