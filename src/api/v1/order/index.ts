@@ -8,6 +8,9 @@ router
   .route('/')
   .post(authMiddleware.protectRouteMiddleware, controller.createNewOrder)
   .get(authMiddleware.protectRouteMiddleware, controller.getAllOrderOfUser);
-router.route('/:id').delete(authMiddleware.protectRouteMiddleware, controller.deleteOrder);
+router
+  .route('/:id')
+  .delete(authMiddleware.protectRouteMiddleware, controller.deleteOrder)
+  .get(authMiddleware.protectRouteMiddleware, controller.getSingleOrder);
 
 export default router;

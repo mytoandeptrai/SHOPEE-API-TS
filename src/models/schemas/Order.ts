@@ -9,6 +9,7 @@ const OrderSchema = new Schema<Order>(
       {
         quantity: { type: Number, required: true },
         product: { type: Schema.Types.ObjectId, ref: MODELS.product, require: true },
+        _id: false,
       },
     ],
     shippingFrom: { type: String, default: '' },

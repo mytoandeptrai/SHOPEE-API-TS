@@ -11,6 +11,11 @@ const getAllOrderOfUser = async (request: RequestWithUser, response: Response, n
   if (result) new ApiResponse(result.data, 'OK', 200, Date.now() - request.startTime, Object(meta)).send(response);
 };
 
+const getSingleOrder = async (request: RequestWithUser, response: Response, next: NextFunction) => {
+  const result = await queries.getSingleOrder(request, next);
+  if (result) new ApiResponse(result, 'OK', 200, Date.now() - request.startTime).send(response);
+};
+
 const createNewOrder = async (request: RequestWithUser, response: Response, next: NextFunction) => {
   const result = await service.createNewOrder(request, next);
   if (result) new ApiResponse(result, 'OK', 200, Date.now() - request.startTime).send(response);
@@ -21,4 +26,4 @@ const deleteOrder = async (request: RequestWithUser, response: Response, next: N
   if (result) new ApiResponse(result, 'OK', 200, Date.now() - request.startTime).send(response);
 };
 
-export { createNewOrder, deleteOrder, getAllOrderOfUser };
+export { createNewOrder, deleteOrder, getAllOrderOfUser, getSingleOrder };

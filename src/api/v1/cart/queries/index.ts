@@ -12,6 +12,14 @@ const getAllCarts = async (request: RequestWithUser, next: NextFunction) => {
     const feature = new (APIFeatures as any)(
       CartModel.find({ user: userId })
         .populate({ path: 'product', populate: { path: 'category' } })
+        .populate({
+          path: 'product',
+          select: '_id name image oldPrice price rating stock shop category',
+          populate: {
+            path: 'category shop',
+            select: '_id name address',
+          },
+        })
         // eslint-disable-next-line @typescript-eslint/naming-convention
         .select({ __v: 0, description: 0 })
         .lean(),
@@ -41,7 +49,14 @@ const getCartOfUser = async (request: RequestWithUser, next: NextFunction) => {
   const userId = request.user._id;
   try {
     const cartInDb = await CartModel.find({ user: userId.toString() })
-      .populate('product', '_id name image oldPrice price rating stock')
+      .populate({
+        path: 'product',
+        select: '_id name image oldPrice price rating stock shop',
+        populate: {
+          path: 'shop',
+          select: '_id address street',
+        },
+      })
       .lean();
     const response = {
       carts: cartInDb,

@@ -50,7 +50,10 @@ const getSingleOrder = async (request: RequestWithUser, next: NextFunction) => {
   try {
     const order = await OrderModel.findById(request.params.id)
       .populate('user', 'fullname email')
-      .populate({ path: 'orderItems', populate: { path: 'product' } });
+      .populate({
+        path: 'orderItems',
+        populate: { path: 'product', select: '_id name image oldPrice price description' },
+      });
 
     if (!order) {
       throw new HttpException(
