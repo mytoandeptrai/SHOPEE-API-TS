@@ -7,6 +7,7 @@ import { CreateUserDto } from './dtos';
 
 const router = Router();
 
+router.route('/:id').get(authMiddleware.protectRouteMiddleware, controller.getSingleUser);
 router.post('/', validationMiddleware(CreateUserDto, 'body'), asyncRouteHandler(controller.createUser));
 router.put(
   '/me',
