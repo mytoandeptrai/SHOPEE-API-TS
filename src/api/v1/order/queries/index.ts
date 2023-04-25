@@ -34,7 +34,7 @@ const getAllOrderOfUser = async (request: RequestWithUser, next: NextFunction) =
     const totalPage = Math.ceil(totalOrders / limit) || 1;
 
     const response = {
-      data: orders,
+      data: { orders },
       currentPage: page,
       length: limit,
       total: totalPage,
