@@ -136,9 +136,9 @@ const deleteReview = async (request: RequestWithUser, next: NextFunction) => {
     }
 
     const existedProduct = await ProductModel.findById(existedReview.productId);
-    await existedReview.remove();
     const averageRatingValue = await calculateRatingOfProduct(existedReview.productId.toString(), next);
     existedProduct.rating = averageRatingValue;
+    await existedReview.remove();
     await existedProduct.save();
 
     return existedReview;

@@ -10,4 +10,5 @@ export enum MODELS {
   cart = 'cart',
   order = 'order',
   review = 'review',
+  wishList = 'wishList',
 }

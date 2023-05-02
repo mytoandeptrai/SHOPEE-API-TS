@@ -11,6 +11,10 @@ const getAllReviewOfProduct = async (request: RequestWithUser, next: NextFunctio
         path: 'user',
         select: 'fullname avatar email _id',
       })
+      .populate({
+        path: 'productId',
+        select: 'name image _id',
+      })
       .sort({ updatedAt: -1 });
 
     return reviews;
@@ -26,6 +30,10 @@ const getAllReviewOfOrder = async (request: RequestWithUser, next: NextFunction)
         path: 'user',
         select: 'fullname avatar email _id',
       })
+      .populate({
+        path: 'productId',
+        select: 'name image _id',
+      })
       .sort({ updatedAt: -1 });
 
     return reviews;
@@ -36,10 +44,15 @@ const getAllReviewOfOrder = async (request: RequestWithUser, next: NextFunction)
 
 const getSingleReview = async (request: RequestWithUser, next: NextFunction) => {
   try {
-    const existedReview = await ReviewModel.find({ _id: request.params.id }).populate({
-      path: 'user',
-      select: 'fullname avatar email _id',
-    });
+    const existedReview = await ReviewModel.find({ _id: request.params.id })
+      .populate({
+        path: 'user',
+        select: 'fullname avatar email _id',
+      })
+      .populate({
+        path: 'productId',
+        select: 'name image _id',
+      });
 
     if (!existedReview) {
       throw new HttpException(

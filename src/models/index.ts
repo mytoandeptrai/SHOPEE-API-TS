@@ -9,6 +9,7 @@ import ShopModel from './schemas/Shop';
 import TokenModel from './schemas/Token';
 import UserModel from './schemas/User';
 import VoucherModel from './schemas/Voucher';
+import WishListModel from './schemas/WishList';
 
 export {
   UserModel,
@@ -22,4 +23,5 @@ export {
   OrderModel,
   ShopModel,
   ReviewModel,
+  WishListModel,
 };
