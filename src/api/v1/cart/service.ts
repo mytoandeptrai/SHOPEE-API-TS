@@ -5,18 +5,22 @@ import { CartModel, ProductModel } from 'models';
 import { Cart } from 'models/types';
 import { FilterQuery, UpdateQuery } from 'mongoose';
 import { IPayloadProductCart } from 'types';
+import { convertStringToObjectId } from 'utils/common';
 import RequestWithUser from 'utils/rest/request';
 
 const addNewProductToCart = async (payload: IPayloadProductCart) => {
   const { userId, productId, quantity } = payload;
-  const newCart = { user: userId, product: productId, quantity };
+  const newCart = { user: convertStringToObjectId(userId), product: convertStringToObjectId(productId), quantity };
   const savedCart = await new CartModel(newCart).save();
   return savedCart;
 };
 const updateQuantityProductInCart = async (payload: IPayloadProductCart) => {
   const { userId, productId, quantity } = payload;
 
-  const filter: FilterQuery<Cart> = { user: userId, product: productId };
+  const filter: FilterQuery<Cart> = {
+    user: convertStringToObjectId(userId),
+    product: convertStringToObjectId(productId),
+  };
   const update: UpdateQuery<Cart> = { quantity };
 
   const updatedCart = await CartModel.findOneAndUpdate(filter, update, { new: true });
@@ -56,7 +60,10 @@ const addToCart = async (request: RequestWithUser, next: NextFunction) => {
     }
 
     let savedCart: any;
-    const filter: FilterQuery<Cart> = { user: userId, product: productId };
+    const filter: FilterQuery<Cart> = {
+      user: convertStringToObjectId(userId),
+      product: convertStringToObjectId(productId),
+    };
     const cartInDb = await CartModel.findOne(filter);
     const payload = { userId, productId, quantity };
 
