@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import { Document, ObjectId } from 'mongoose';
 
 interface IObjectInformation {
   id: string;
@@ -13,6 +13,7 @@ interface ICreditCard {
 }
 
 export default interface User extends Document {
+  _id: string | ObjectId;
   email: string;
   fullname?: string;
   name?: string;
