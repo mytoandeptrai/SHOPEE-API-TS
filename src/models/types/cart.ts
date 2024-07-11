@@ -1,9 +1,7 @@
-import { Document } from 'mongoose';
-import Product from './product';
-import User from './user';
+import { Document, ObjectId } from 'mongoose';
 
 export default interface Cart extends Document {
-  user: User;
-  product: Product;
+  user: ObjectId;
+  product: ObjectId;
   quantity: number;
 }

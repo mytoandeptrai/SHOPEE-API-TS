@@ -2,6 +2,8 @@ import { HttpException } from 'exceptions';
 import StatusCode from 'exceptions/statusCode';
 import { NextFunction } from 'express';
 import { CartModel, ProductModel } from 'models';
+import { Cart } from 'models/types';
+import { FilterQuery, UpdateQuery } from 'mongoose';
 import { IPayloadProductCart } from 'types';
 import RequestWithUser from 'utils/rest/request';
 
@@ -13,11 +15,11 @@ const addNewProductToCart = async (payload: IPayloadProductCart) => {
 };
 const updateQuantityProductInCart = async (payload: IPayloadProductCart) => {
   const { userId, productId, quantity } = payload;
-  const updatedCart = await CartModel.findOneAndUpdate(
-    { user: userId, product: productId },
-    { quantity },
-    { new: true }
-  );
+
+  const filter: FilterQuery<Cart> = { user: userId, product: productId };
+  const update: UpdateQuery<Cart> = { quantity };
+
+  const updatedCart = await CartModel.findOneAndUpdate(filter, update, { new: true });
   return updatedCart;
 };
 
@@ -54,7 +56,8 @@ const addToCart = async (request: RequestWithUser, next: NextFunction) => {
     }
 
     let savedCart: any;
-    const cartInDb = await CartModel.findOne({ user: userId, product: productId }); // Truyền productId trực tiếp
+    const filter: FilterQuery<Cart> = { user: userId, product: productId };
+    const cartInDb = await CartModel.findOne(filter);
     const payload = { userId, productId, quantity };
 
     if (cartInDb) {
