@@ -7,14 +7,17 @@ import RequestWithUser from 'utils/rest/request';
 
 const addNewProductToCart = async (payload: IPayloadProductCart) => {
   const { userId, productId, quantity } = payload;
-  const newCart = { user: userId, product: { _id: productId }, quantity };
+  const newCart = { user: userId, product: productId, quantity };
   const savedCart = await new CartModel(newCart).save();
   return savedCart;
 };
-
 const updateQuantityProductInCart = async (payload: IPayloadProductCart) => {
   const { userId, productId, quantity } = payload;
-  const updatedCart = await CartModel.findOneAndUpdate({ user: userId, product: { _id: productId } }, { quantity });
+  const updatedCart = await CartModel.findOneAndUpdate(
+    { user: userId, product: productId },
+    { quantity },
+    { new: true }
+  );
   return updatedCart;
 };
 
@@ -51,7 +54,7 @@ const addToCart = async (request: RequestWithUser, next: NextFunction) => {
     }
 
     let savedCart: any;
-    const cartInDb = await CartModel.findOne({ user: userId, product: { _id: productId } });
+    const cartInDb = await CartModel.findOne({ user: userId, product: productId }); // Truyền productId trực tiếp
     const payload = { userId, productId, quantity };
 
     if (cartInDb) {
